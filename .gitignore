@@ -1,6 +1,9 @@
-# OS 
-
+# OS specyfic
 .DS_Store
+
+# Generated pdfs 
+
+*.pdf
 
 
 # TeX gitignore
