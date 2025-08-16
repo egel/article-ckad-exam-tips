@@ -1,0 +1,202 @@
+
+\section{Introduction}
+
+In this article, I will share my journey from the moment when I planned to buy the course to the point when I passed the exam. You will get my full story, including both good and not-so-good decisions, but most importantly, some of the best tips and tricks that I learned and how those can help you pass your CKAD exam effectively and with confidence.
+
+\subsection{My short background story}
+
+This section is optional, so feel free to skip it if you'd prefer. However, I believe the advices and tips have the best effect and are also most autentic when they come from real-live situations. Therefore I wanted to share my story with you. 
+
+Last year, in June 2024, I've bought the CKAD course from Linux Foundation. I still had some development budget and always wanted to dive more into Kubernetes. Although I did not know how quick I will finish the course. As live goes by and at that time was very unpredicting, I had to put the learning on the shelf for couple of months. Meanwhile, I decided I will invest in some hardware and start building my learning-ground, so when the time comes I do not need to rent online cluster\footnote{I will share more details in later sections \nameref{subsec:setup-infrastructure}, where we will talk about hardware.}. So after buying the CKAD course and before I start learning, I begin exploring how to setup Kubernetes on my new home cluster. It took me few weeks to find good hardware and I another few weeks to find learn how setup cluster\footnote{It could be much faster if I wanted just to setup cluster once, but I also wanted to document this on my blog \url{https://egel.github.io/2024/08/26/home-k8s-cluster.html}}. As you can see this was not the most effective way in short term, but before I started real learning of kubernetes for CKAD, I get some fundamentals like for CKA.
+
+\subsection{CKAD vs CKA: which exam is for me?}
+
+In this article I will cover preparation for the CKAD exam, although my first questions before I start my journey with Kubernetes was to actually which course/exam I should strive for -- CKA, CKAD or maybe something else? Let's try to answer this question with defining what CKAD and CKA actually are.
+
+\begin{definition}[CKAD] 
+Certified Kubernetes Application Developer is a certification that focuses on skills for successful Kubernetes application development. It assumes working knowledge of container runtimes and microservices, and validates the ability to work with Kubernetes resources and Cloud Native concepts.~\cite{linuxfoundation-ckad}
+\end{definition}
+
+CKAD is mainly for people who are actively working as developers -- whose sole purpose of their work is to build and containerize their software to run in Kubernetes environment. This course is not involved in deep cluster administration - it only scratches the general theory and involves very shallow administration tasks like enabling plugins in the cluster (e.g.: \href{https://kubernetes.io/docs/reference/access-authn-authz/rbac/}{RBAC})
+
+\begin{definition}[CKA]
+Certified Kubernetes Administrator is a certification that focuses on skills for administering and managing Kubernetes clusters, assuming prior knowledge of container runtimes and Kubernetes basics. It validates the ability to deploy, manage, and maintain Kubernetes clusters.~\cite{linuxfoundation-cka}
+\end{definition}
+
+\subsection{Courses and exam}
+We will begin with some questions that you might ask before starting.
+\begin{itemize}
+    \item Do I need a course? Which course should I choose?
+    \item Where to buy the exam?
+    \item How to start learning?
+\end{itemize} 
+
+\paragraph{Do I need a course?} No, there is no obligatory procedure to buy the course in order to learn Kubernetes or to pass exam. You can just learn on your own with the resourses you will fine online. For example the foundation of almost all you will learn you can find at \href{https://kubernetes.io/docs}{https://kubernetes.io/docs}. 
+
+Although buying the course will help you prepare, as the course usually give some structutre while learing, and make it graduall starting from some basic new concepts and going into more advance structures.
+
+\begin{note}{note:cncf-curriculum}
+	When you plan to learn on your own, and later just buy the exam, remember to follow the Curriculum for CKAD~\cite{cncf-curriculum}. Next, while learning give yourself a structure and checking all the topics you've already covered.
+\end{note}
+
+
+\paragraph{Which course should I choose?} There are pleanty of resources you can get online and from the experiance there is no need to buy course. I was not so deep at that time, which course is the best or most recommended, although I got some buget and therefore I simply bought a bundle \href{https://trainingportal.linuxfoundation.org/collections/kubernetes-developer}{course LFD259 + Exam} directly from the Linux Foundation -- I bought it as at that time there was 40\% off from the base price\footnote{Later I found out that Linux foundation quite often have some sales-off deals from 20-40\%. You can subscribe to their newsletter, to get the info deals on your emailbox}.
+
+\begin{itemize}
+	\item \textbf{LFD259 from Linux Foundation} - this course is ok, although I find it quite overprised for what you get from it. The course will guide you through all the basics, but you need to study hard as there is mostly lot of text, plus just a few small videos explain more detailed concepts. \\
+	In the course you will content divided into chapters with dry theory, and later after end of each chapter there are excercice labs, plus some homework tasks. I found the labs as the most interesting part of the course as you follow some real excercices to build something with your cluster\footnote{For example I liked the labs where you have to create basic registry in your cluster to later upload docker images. But onestly at CKAD exam you do not need to build the registry from scratch -- at max you may need to push image to given, already prepared registry URL}, although they are more a practicte to get into the kubernetes and develop good habits. I did not found there much to prepare what you will find directly at the CKAD exam (but I will cover this later).
+	
+\end{itemize}
+
+\paragraph{Where to buy the exam?}
+You can buy official CKAD exam directly from the Linux Foundation shop \burl{https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/} or there is also a there is  \url{https://kube.promo/devops}.
+
+\begin{tip}{tip:buyexam1}
+	If you want to buy a bundle course + exam be prepared you will have 12-months from the date of purchase and within this period you will have to schedule final date for the exam. \\Plan your learnings sessions across weeks, so you can enjoy it and do not need to rush when time for course will comes closer to the expiration date.\footnote{It was a case for me, that I bought course and for few monts was not learning much at all, but had to speed up quite intense as got reminder 3 month prior to the end of course and had to change my schedule and refocus on the course.}
+\end{tip}
+
+
+\section{Understanding Kubernetes Fundamentals}
+
+The key to learn Kubernetes and pass the exam is to understand the essential concepts of Kubernetes anatomy and its architecture, which sets the foundation for almost every other course or exam.\\
+
+\noindent The basic terminology and concepts for Kubernetes would be, for example\footnote{Use the links I've provided for each of the terms and help yourself while navigating directly to the documentation resources.}:
+
+\noindent{}
+\begin{multicols}{3}
+\begin{itemize}
+    \item Namespaces
+    \item Contexts
+    \item Resource-limits
+    \item Network Policies
+    \item Control Planes and Worker Nodes
+    \item Containers and Pods
+    \item Operators
+    \item Labels and Selectors
+    \item Container Network Interface (CNI)
+    \item Container Runtime Interface (CRI)
+    \item \texttt{kube-apiserver}, \texttt{kube-scheduler}, \texttt{etcd}~Database
+    \item \texttt{Services}
+    \item \texttt{Deployments} and Rollbacks
+    \item \texttt{Jobs}, \texttt{CronJobs}
+    \item \texttt{ConfigMaps} and \texttt{Secrets}
+    \item \texttt{PersistentVolumes} and \texttt{PersistentVolumeClaims}
+    \item \texttt{Readiness Probes}, \texttt{Liveness Probes}, and~\texttt{Startup Probes}
+    \item Sidecar, Adapter, Ambassador and initContainers
+    \item Custom Resource Definitions
+    \item Admission Controller
+    \item Docker and creating \texttt{Dockerfile}
+    \item Helm
+    \item Multi-container-pod
+    \item and probably more\ldots
+\end{itemize}
+\end{multicols}
+
+It is not my goal here to mention the complete list of things what to learn. Kubernetes evolves, and each year new versions are being developed\footnote{At the time of writing, Kubernetes is in version 1.33.1}, so new concepts comming in, or some being deprecated. Here, I rather wanted to emphasize that there are some fundamentals to understand before or while jumping into the practice.
+
+\begin{tip}{tip:not-learn-by-heart}
+	It is also vital to say that you really do not need to know a complete definition of each these terms or components. You should rather focus to know what they are, and where they need to be used depends on the context. In final CKAD exam you need to apply this knowledge at practice, and so far I know there is no question to write a definition of something -- only practical examples.
+\end{tip}
+
+\section{Learning plan}
+
+Let's dive bit into the process how to can start learning kubernetes. The course and exam is one thing, but we will still need setup for ourselfs some environment to work with.
+
+\subsection{Setup infrastucture}
+\label{subsec:setup-infrastructure}
+
+There are few ways how you can start with practical learning of Kubernetes. I found there are 3 or 4 most popular options you can choose from:
+
+
+\paragraph{Rent the Cluster} You can simply buy some online cluster and use it for the learning purposes. Most popular options would be (order does not matter): 
+\begin{enumerate}
+	\item Google Cloud Kubernetes Engine (GKE)
+	\item Amazon Elastic Container Service for Kubernetes (EKS)
+	\item Microsoft Azure Kubernetes Service (AKS)
+\end{enumerate}
+
+
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	\textbf{Advantages} & \textbf{Disadvantages} \\
+	\hline
+	\begin{enumerate}
+		\item minimal time required to set up a Kubernetes environment
+		\item when needed start learning almost instantly
+		\item no need to deep configuration as managed by cloud providers
+	\end{enumerate}
+	
+	&
+	
+	\begin{enumerate}
+		\item additional costs as this type of services are usually paid
+		\item commonly you pay for usage / time, so also need to remember shutdown service in order your bill will not explode
+		\item no need to deep configuration as managed by cloud providers
+	\end{enumerate}\\
+	\hline
+\end{tabularx}
+
+
+\paragraph{Minikube} For some basic learnings you can just use your computer and setup localy a minikube. This is great for inital explore or for some simple testing, but there are some limitations of this appoach for example if want to simulate multiple nodes.\\
+
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	\textbf{Advantages} & \textbf{Disadvantages} \\
+	\hline
+	\begin{enumerate}
+		\item no additional costs
+		\item work on single computer
+		\item easy to work \& learn
+		\item after downloading and setup can work offline\footnote{Of course if you may need to download some additional images you will require internet, but in general after this basic setup you should be able to learn offline}
+		\item can start learning almost instantly
+		\item little to none configuration as this is prepared package
+	\end{enumerate}
+	
+	&
+	
+	\begin{enumerate}
+		\item only run with single node (control plane)
+		\item cannot simulate all scenarios especially when learning new about multiple nodes
+		\item allowed but not recommented for exam environment
+	\end{enumerate}\\
+	\hline
+\end{tabularx}
+
+\paragraph{Bild own cluster} If you dare to explore kubernetes in full depth you can buy some hardware and setup your own cluster at home. I took this approach as wanted and plan to explore kubernetes the hard-way. Although, honestly, I would not recommend this approach if you just want to learn to the exam and pass.\\
+
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	\textbf{Advantages} & \textbf{Disadvantages} \\
+	\hline
+	\begin{enumerate}
+		\item complete control of the infrastrucute
+		\item great to work / learn kubernetes
+		\item little to none configuration as this is prepared package
+		\item demanding but very satisfying 
+	\end{enumerate}
+	
+	&
+	
+	\begin{enumerate}
+		\item additional cost of hardware
+		\item setup may take from few hours (for expert) to few days (begginer) depends on you current skills
+		\item need learn much more then just to pass CKAD exam, as you will assembe and setup own cluster from scratch
+		\item not recommened if you just want pass CKAD
+		\item not recommened if you do not want to own and maintian cluster
+	\end{enumerate}\\
+	\hline
+\end{tabularx}
+
+\paragraph{Recommendations} If you desire to \textit{quicky start} and \textit{can afford for additional cluster costs}, just \textbf{rent a cluster} for yourself. With that you will almost instantly get to the point of learning, although pay attention to the usage and cluster costs (setup the alarms!) as many people got large bills\footnote{There are many stories that some people got bills even for hundred or thousend of dollars \url{https://www.webapper.com/aws-cost-horror-stories/} or \url{https://www.reddit.com/r/aws/comments/1k1lkkp/cloud_billing_horror_stories/}} as they were not carefull.\\
+
+If \textit{need a buget option} or just want \textit{initially explore} the kubernetes, \textbf{use Minicube}\cite{minikube-docs} as this should be enought to simulate most (but not every) of the question in your CKAD exam.\\
+
+Or if you plan to spend some ever more time with kubernetes and really learn the thing, you can invest some money and \textbf{build your own cluster}\footnote{I've build my own home kubernetes cluster with HP Elitedesk 800 G3 and small switch -- If you are interested how I did it, I shared the full story on my blog \href{https://egel.github.io/2024/08/26/home-k8s-cluster.html}{Creating Home Kubernetes Cluster Lab}.}. I have to emphasize this once more, as this approach is not for eveyone, I am not recommending as universal 
+
+\section{Focus on the exam}
+
+
+\subsection{Resources for the exam}
+
+
+\subsection{CKAD Exam vs learnings}
