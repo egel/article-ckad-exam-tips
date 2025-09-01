@@ -1,0 +1,494 @@
+
+\section{Introduction}
+
+In this article, I will share my journey from the moment when I planned to buy the course, to the point when I passed the exam at \printdate{2025-08-01}. You will get my full story, including both good and not-so-good decisions, but most importantly, some of the best tips and tricks that I learned and how those can help you pass your CKAD exam effectively and with confidence.
+
+\subsection{My Short Background Story}
+This section is optional, so feel free to skip it if you prefer. However, I believe the advice and tips are most impactful when they stem from real-life experiences. Therefore, I wanted to share my journey toward passing the exam.
+
+Last year in June 2024, I purchased the CKAD course from the Linux Foundation. I still had some development budget and had always wanted to deepen my understanding of Kubernetes. While I bought the course, I wasn't sure how quickly I'd complete it. Life's unpredictability soon intervened, and I had to pause my learning for several months.
+
+During this time, I decided to invest in hardware and begin building my learning environment. This way, when the time came, I wouldn't need to rent an online cluster.\footnote{I'll share more details in later sections \nameref{subsec:setting-up-infrastructure}, where we'll discuss the hardware.}
+
+So, after purchasing the CKAD course but before starting the learning process, I began exploring how to set up Kubernetes on my new home cluster. It took me few weeks to find suitable hardware and another few weeks to learn how to configure the cluster.\footnote{It could have been faster if I had only needed to set up the cluster once, but I also wanted to document this on my blog: \url{https://egel.github.io/2024/08/26/home-k8s-cluster.html} for myself in future. I encourage you to take a look if you're interested.}
+
+As you can see, this approach wasn't efficient in the short term. However, before diving into Kubernetes learning for CKAD, I gained foundational knowledge about managing my own cluster. These insights into how the cluster operates internally was more like learning for CKA, although proved invaluable when I encountered issues and needed to troubleshoot them.
+
+\subsection{CKAD vs CKA: Which one is for me?}
+
+In this section, I will cover preparation for the CKAD exam. Initially, my first questions were about which course or exam I should aim for: CKA, CKAD, or maybe something else? Let's clarify what CKAD and CKA are.
+
+\begin{definition}[CKAD] 
+	Certified Kubernetes Application Developer is a certification that focuses on skills required for successful Kubernetes application development. It assumes prior knowledge of container runtimes and microservices, and validates the ability to work with Kubernetes resources and Cloud Native concepts\cite{linuxfoundation-ckad}.
+\end{definition}
+
+CKAD is primarily designed \textbf{for developers} who are actively engaged in building and containerizing software to run within a Kubernetes environment. Unlike CKA, the CKAD course does not dive deeply into cluster administration. Instead, it focuses on general theory and includes stronger emphasis on managing applications that run on the cluster. In CKAD you will do only shallow administrative tasks such as enabling plugins in the cluster. You can expect in CKAD cover topics like\cite{linuxfoundation-ckad}:
+
+\begin{enumerate}
+	\item \textbf{Containerization \& Pod Design}: Build/modify container images, select workload resources (Deployments, DaemonSets), and design multi-container Pods (sidecar, init containers) with persistent/ephemeral volumes.  
+	\item \textbf{Deployment Strategies}: Implement blue/green/canary deployments, manage rolling updates, and use Helm/Kustomize for package management.  
+	\item \textbf{Observability \& Debugging}: Use probes, health checks, CLI tools, logs, and debugging techniques to monitor and troubleshoot applications.  
+	\item \textbf{Configuration \& Security}: Leverage ConfigMaps, Secrets, ServiceAccounts, and SecurityContexts for secure, dynamic configuration and resource management.  
+	\item \textbf{Access Control \& Networking}: Configure NetworkPolicies, troubleshoot service access, and use Ingress to expose applications securely.  
+	\item \textbf{Extended Kubernetes Features}: Utilize CRDs, Operators, and admission control for custom resources, authentication, and policy enforcement.  
+\end{enumerate}
+
+
+\begin{definition}[CKA]
+	The Certified Kubernetes Administrator certification focuses on skills for administering and managing Kubernetes clusters. It assumes prior knowledge of container runtimes and basic Kubernetes concepts. The certification validates the ability to deploy, manage, and maintain Kubernetes clusters\cite{linuxfoundation-cka}.
+\end{definition}
+
+CKA is meant for people like \textbf{System Administrators}, \textbf{DevOps engineers} and all those who are primarly want to focus on managing and maintenance of Kubernetes cluster. In comparison to CKAD, CKA focus much more on the cluster architecture and administration, rather the application management. CKA covers topics like\cite{linuxfoundation-cka}: 
+
+\begin{enumerate}
+	\item \textbf{Storage}: Implement dynamic provisioning, manage PV/PVCs, and configure volume types/access modes.  
+	\item \textbf{Troubleshooting}: Monitor clusters, resolve node/service issues, and analyze container logs/networking.  
+	\item \textbf{Workloads}: Deploy apps with rolling updates, use ConfigMaps/Secrets, and configure autoscaling/scheduling.  
+	\item \textbf{Cluster Architecture}: Set up RBAC, HA control planes, and manage clusters with kubeadm/Helm/Kustomize.  
+	\item \textbf{Networking}: Configure Pod connectivity, Network Policies, service types (ClusterIP/LoadBalancer), and Ingress.  
+	\item \textbf{Extensions}: Integrate CNI/CSI, CRDs, operators, and manage security/extension interfaces.
+\end{enumerate}
+
+
+
+\subsection{Courses and Exam Preparation}
+Before we begin, let's address some common questions:
+\begin{itemize}
+	\item Do I need a course? 
+	\item Which course one should I choose?
+	\item Where can I purchase the exam?
+\end{itemize} 
+
+\paragraph{Do I need a course?} No, there is no mandatory requirement to purchase a course in order to learn Kubernetes or pass an exam. You can effectively learn on your own using online resources. For example, the foundational concepts you'll encounter are covered in the CKAD curriculum\cite{cncf-curriculum} and the official Kubernetes documentation at \href{https://kubernetes.io/docs}{https://kubernetes.io/docs}.
+
+While purchasing a course can provide structure and gradually introduce new concepts from basic to advanced, it is not a prerequisite for learning or exam preparation.
+
+\begin{note}{note:cncf-curriculum}
+	When planning to learn on your own and later purchase an exam, remember to follow the Curriculum for CKAD\cite{cncf-curriculum}. Next, while learning, give yourself a structure and review all the topics you've covered. With this you will be sure you did not miss a thing or learn a topic that is meant for another course (e.g, CNA).
+\end{note}
+
+
+\paragraph{Which course should I choose?}  
+There are plenty of free online resources available, and based on my experience, purchasing a course is unnecessary. However, if you’ve decided to buy one, many options exist.  
+
+When I was looking for a course, a friend recommended one, and I did not specifically search for the best or most recommended option at the time. With a budget in mind, I purchased a bundle \href{https://trainingportal.linuxfoundation.org/collections/kubernetes-developer}{(LFD259 + Exam)} directly from the Linux Foundation. I chose this option mostly due to high 40\% discount on the base price.\footnote{Later, I learned the Linux Foundation frequently offers sales and discounts of 20–40\%. Subscribing to their newsletter can keep you informed about all available deals via email.}
+
+
+\paragraph{LFD259 from Linux Foundation} I enrolled this course  although I found the experience to be somewhat standard compared to other free resources I later found in the web.\footnote{While the price felt to me high relative to the content provided, the official course ensures alignment with the latest Kubernetes Curriculum standards.}
+
+The course covers all the basics, but some topics may require more in-depth study since the content is mostly text-based and doesn't provide all the nitty-gritty details. There are only a few small videos that explain more visually-dependent concepts.
+
+The course material is divided into chapters with dry theory, followed by exercise labs and homework tasks at the end of each chapter. I found the labs to be the most engaging part of the course as they involve real-world exercises to build something with your cluster.\footnote{For example, I most enjoyed the labs where you create a basic registry in your cluster to upload Docker images later on. However, it's worth noting that at the CKAD exam, you won't need to build the registry from scratch. At most, you'll need to push an image to a given registry URL that's already set up for you.}
+
+While I found the labs to be a great way to get hands-on experience with Kubernetes and develop good habits, they didn't provide much practice material directly applicable to the CKAD exam -- though I'll cover in detail at section \nameref{sec:focus-on-exam}).
+
+\paragraph{Where to buy the exam?} You can purchase an official CKAD exam directly from the Linux Foundation shop \burl{https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/}. Later, I found a webpage \url{https://kube.promo} that offers various Kubernetes Promo codes with great discounts where you might find something that suite you better.
+
+\begin{tip}{tip:buyexam1}
+	If you want to buy a bundle \texttt{course} + \texttt{exam}, be prepared to have only 12 months from the date of purchase, during which you must schedule your final exam date\footnote{For me 12 month initially sounded like a lot of time, but the course and exam is quite challenging, and if you have regular work, family, kids, the time goes by really fast.}. Plan your learning sessions across weeks to enjoy the process and avoid rushing when the course deadline approaches.\footnote{I personally experienced this situation, where I bought the course but didn't learn much for a few initial months, then had to speed up intensely due to reminders 3 months prior to the course expiration, which forced me to change my schedule and refocus on the course.}
+\end{tip}
+
+\section{Understanding Kubernetes Fundamentals}
+
+The key to learning Kubernetes and passing the exam lies in understanding the essential concepts of Kubernetes anatomy and its architecture. This foundational knowledge serves as a basis for almost every other course or exam.
+
+The basic terminology and concepts for the CKAD exam include, for example\footnote{See the links I have included for each term and consult the official documentation resources directly.}:
+
+\begin{multicols}{3}
+\begin{itemize}
+    \item \href{https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/}{Namespaces}
+    \item \href{https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_use-context/}{Contexts}
+    \item \href{https://kubernetes.io/docs/concepts/overview/components/}{Control Planes and Worker Nodes}
+    \item \href{https://kubernetes.io/docs/concepts/containers/}{Containers} and \href{https://kubernetes.io/docs/concepts/workloads/pods/}{Pods}
+    \item \href{https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#operators}{Operators}
+    \item \href{https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/}{Labels and Selectors}
+    \item \href{https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/}{Resource-limits}
+    \item \href{https://kubernetes.io/docs/concepts/services-networking/network-policies/}{Network Policies}
+    \item \href{https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/}{Container Network Interface (CNI)}
+    \item \href{https://kubernetes.io/docs/concepts/architecture/cri/}{Container Runtime Interface (CRI)}
+    \item \href{https://kubernetes.io/docs/concepts/architecture/#kube-apiserver}{\texttt{kube-apiserver}}, \href{https://kubernetes.io/docs/concepts/architecture/#kube-scheduler}{\texttt{kube-scheduler}}, \href{https://kubernetes.io/docs/concepts/architecture/#kube-scheduler}{\texttt{etcd}}~Database
+    \item \href{https://kubernetes.io/docs/concepts/services-networking/service/}{\texttt{Services}}
+    \item \href{https://kubernetes.io/docs/concepts/workloads/controllers/deployment/}{\texttt{Deployments}} and \href{https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment}{Rollbacks}
+    \item \href{https://kubernetes.io/docs/concepts/workloads/controllers/job/}{\texttt{Jobs}}, \href{https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/}{\texttt{CronJobs}}
+    \item \href{https://kubernetes.io/docs/concepts/configuration/configmap/}{\texttt{ConfigMaps}} and \href{https://kubernetes.io/docs/concepts/configuration/secret/}{\texttt{Secrets}}
+    \item \href{https://kubernetes.io/docs/concepts/storage/persistent-volumes/}{\texttt{PersistentVolumes}} and \href{https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume}{\texttt{PersistentVolumeClaims}}
+    \item \href{https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/}{\texttt{Readiness Probes}, \texttt{Liveness Probes}, and~\texttt{Startup Probes}}
+    \item \href{https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/}{Sidecar}, \href{https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns/}{Adapter \& Ambassador patterns} and \href{https://kubernetes.io/docs/concepts/workloads/pods/init-containers/}{initContainers}
+    \item \href{https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/}{Custom Resource Definitions}
+    \item \href{https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/}{Admission Controller}
+    \item \href{https://docs.docker.com/}{Docker} and creating \href{https://docs.docker.com/reference/dockerfile/}{\texttt{Dockerfile}}
+    \item \href{https://helm.sh/docs/intro/install/}{Helm}
+    \item \href{https://kubernetes.io/blog/2025/04/22/multi-container-pods-overview/}{Multi-container-pod}
+    \item and probably more\ldots
+\end{itemize}
+\end{multicols}
+
+It's not my intention here to list everything you need to learn for CKAD. In this article, I aim to provide you a solid starting point you can start building your knowledge foundations. Kubernetes evolves rapidly, with new versions released annually\footnote{At the time of writing this article, Kubernetes is in version 1.33.1}. New concepts emerge while others become deprecated. Therefore it's essential to grasp fundamental concepts before, or while, diving into practice.
+
+\begin{tip}{tip:not-learn-by-heart}
+	Knowledge about Kubernetes terms is important, although it is vital to note that you do not need to memorize complete definitions of every Kubernetes term or component. Instead, focus on understanding their purpose -- how and where they are used in particular contexts.  
+	
+	\textbf{In the CKAD exam, you will only encounter practical tasks} where you will apply your knowledge directly on the cluster. There are no questions requiring written definitions, so prioritize practical examples.
+\end{tip}
+
+\section{Learning Plan}
+
+Let's dive into the process of learning Kubernetes. While the course and exam are one thing, you will still need to set up your own environment to solidify the knowledge you can gain only through hands-on practice.
+
+\subsection{Setting Up Infrastructure}
+\label{subsec:setting-up-infrastructure}
+
+There are a few ways to begin with practical learning of Kubernetes. I found 3 popular options you can choose from:
+
+\paragraph{Renting a Cluster} You can simply buy an online cluster and use it for learning purposes. The~most popular options (in no particular order) include:
+\begin{enumerate}
+	\item Google Cloud Kubernetes Engine (GKE)
+	\item Amazon Elastic Container Service for Kubernetes (EKS)
+	\item Microsoft Azure Kubernetes Service (AKS)
+\end{enumerate}
+
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	\cellcolor{DarkOliveGreen2}\textbf{Advantages} & \cellcolor{Tomato1}\textbf{Disadvantages} \\
+	\hline
+	\begin{enumerate}
+		\item Minimal time is required to set up a Kubernetes environment.
+		\item You can start learning almost instantly when needed.
+		\item There is no need for deep cluser configuration, as cloud providers manage it.
+	\end{enumerate}
+	
+	&
+	
+	\begin{enumerate}
+		\item Additional costs are associated with this type of service, which are usually paid.
+		\item You pay for usage or time, so remember to shut down the service to avoid excessive bills.
+	\end{enumerate}\\
+	\hline
+\end{tabularx}
+
+
+\paragraph{Minikube} For some basic learnings, you can just use your computer and set up Minikube locally. This is great for initial exploration or simple testing, but there are some limitations to this approach, such as simulating multiple nodes.\\
+
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	\cellcolor{DarkOliveGreen2}\textbf{Advantages} & \cellcolor{Tomato1}\textbf{Disadvantages} \\
+	\hline
+	\begin{enumerate}
+		\item No additional costs
+		\item Works on a single computer
+		\item Easy to work and learn
+		\item After downloading and setting up, you can work offline\footnote{Of course, if you need to download some additional images, you will require internet. However, in general, after this basic setup, you should be able to learn offline}
+		\item Can start learning almost instantly
+		\item Little to no configuration is required as this is a prepared package
+	\end{enumerate}
+	
+	&
+	
+	\begin{enumerate}
+		\item Only runs with a single node (control plane)
+		\item Cannot simulate all scenarios, especially when learning about multiple nodes
+		\item Not recommended for exam environments
+	\end{enumerate}\\
+	\hline
+\end{tabularx}
+
+\paragraph{Build Your Own Kubernetes Cluster}
+If you dare to explore Kubernetes in full depth, you can buy some hardware and set up your own cluster at home. I took this approach because I wanted to explore Kubernetes the hard way to better unde. However, \textbf{if your only goal is to learn for the exam and pass it, I would not recommend this approach} as it may significantly extend the time before you start learning real exam content.\\
+
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	\cellcolor{DarkOliveGreen2}\textbf{Advantages} & \cellcolor{Tomato1}\textbf{Disadvantages} \\
+	\hline
+	\begin{enumerate}
+		\item Complete control of the infrastructure.
+		\item Great for learning and working with kubernetes.
+		\item Little to no configuration is required since it's a pre-packaged solution.
+		\item Demanding but very satisfying. 
+	\end{enumerate}
+	
+	&
+	
+	\begin{enumerate}
+		\item Additional cost of hardware is incurred.
+		\item Setup may take anywhere from a few hours (for experts) to several days (for beginners), depending on your current skills.
+		\item You will need to learn much more in direction for CKA than the CKAD exam, as you will assemble and set up an entire cluster from scratch.
+		\item I do not recommend this approach if you only want to pass the CKAD exam.
+		\item Additionally, maintaining and owning a cluster can be a significant responsibility.
+	\end{enumerate}\\
+	\hline
+\end{tabularx}
+
+\paragraph{Recommendations} 
+If you desire to \textit{quickly start} and \textit{can afford additional cluster costs}, just \textbf{rent a cluster} for yourself. With that, you will almost instantly reach the point of learning. However, pay attention to usage and cluster costs (set up alarms!) as some people have incurred large bills\footnote{There are numerous stories about people receiving bills for hundreds or thousands of dollars: \url{https://www.webapper.com/aws-cost-horror-stories/} and \url{https://www.reddit.com/r/aws/comments/1k1lkkp/cloud_billing_horror_stories/}. These incidents often stem from not carefully reviewing the Terms of Service or skipping them entirely.}.\\
+
+If you \textit{need a budget option} or want to \textit{initially explore} Kubernetes, \textbf{use Minikube}\cite{minikube-docs}. This should be sufficient to simulate most (but not all) scenarios in your CKAD exam.\\
+
+Or, if you plan to spend more time with Kubernetes and truly learn the subject, you can invest in \textbf{building your own cluster}\footnote{I built my own home Kubernetes cluster using 3 HP Elitedesk 800 G3 and a small switch. If you're interested in the details, I've shared the full story on my blog: \url{https://egel.github.io/2024/08/26/home-k8s-cluster.html}}. Although I want to emphasize, despite that I took this approach, I am not able to universally recommended it. It requires significantly larger resources and time, and formost it may not be suitable for everyone.
+
+
+\subsection{Resources to learn from}
+
+There are a couple of resources I used for exam. One of them was from offical sources and some from 3rd parties. Here I want to share with you all that helped me.
+
+\subsubsection*{Offical resources}
+
+\paragraph{\href{https://docs.linuxfoundation.org/tc-docs/certification/lf-handbook2}{Candidate Handbook}} in here you will find a ton of \underline{important organization informations} for new candidates. For example you can find there: 
+
+\begin{itemize}
+	\item Candidate requirements
+	\item Exam Registration
+	\item Scheduling, Rescheduling, Cancelling an Exam
+	\item PSI Remote Testing Tutorial
+	\item Exam Rules and Policies
+	\item and more\ldots
+\end{itemize}
+
+\paragraph{\href{https://github.com/cncf/curriculum}{Curriculum}} 
+This resource contains the content agenda required for all exams, including the CKAD\footnote{I refer to the root resource rather than an exact PDF, as the current version 1.33.1 will make the link obsolete.}. This is an important resource because it holds a complete agenda with all topics and the exact percentage of how the exam is structured. It is especially helpful if you have already learned the basics of Kubernetes and are preparing for sample test questions.
+
+\paragraph{\href{https://kubernetes.io/docs}{Kubernetes Docs}} I would not risk saying this is \textbf{the most important resource you need}. You will find there all technical aspects explained for Kubernetes. Also \underline{remember this URL}, as you are allowed to use this resource on the exam. Moreover, you will need it to quickly accomplish tasks in short time\footnote{For example, the creation of PV \& PVC is not yet possible via \texttt{kubectl}, so you will need to refer the docs, in order to copy the manifest.}.
+
+\paragraph{\href{https://kubernetes.io/blog}{https://kubernetes.io/blog}} In this resouce you will find lot of articles from general Kubernetes scene. There is tons of articles you may find interesting to read, as extending your general knowledge. 
+
+\paragraph{\href{https://github.com/kubernetes/}{Kubernetes GitHub account}} this resouce is a holder for all repositores for kubernetes.
+
+\paragraph{\href{https://training.linuxfoundation.org/training/kubernetes-for-developers/}{LFD259}} (paid) this is an offical course for CKAD from the Linux Foundation.
+
+%\subsubsection{3rd party resources}
+
+\section{Focus on the exam}
+\label{sec:focus-on-exam}
+
+Now that it's time for the exam, I assume you have a good understanding of Kubernetes and are planning to take the exam.
+
+\subsection{Quick recap of the exam}
+
+\begin{itemize}
+	\item The exam duration is 120 minutes\footnote{The time starts counting from when you close the environment demo in the final exam.}.
+	\item A minimum score of 66\% is required for a passing grade.
+	\item The exam is validated by automated scripts, and the results will be presented to you within 24 hours\footnote{While it might take longer, you have 24 hours to report any issues that occurred during the exam.}.
+	\item The exam is online proctored\footnote{This means there's an observer who monitors your session throughout the exam to ensure it follows the rules.}.
+	\item You can expect 15-20 tasks in the exam.
+\end{itemize}
+ 
+
+\subsection{CKAD Exam vs learnings}
+
+I will say it once more, the exam is not like the course or lectures. The exam have questions prepared in specific way that you will need to get used to, then practice, practice and practice then in order answer as soon as possible to fit the time.
+
+\subsubsection{Resorces to practice excercises}
+\label{subsubsec:resources-to-practice-excercises}
+
+\paragraph{\href{https://killercoda.com}{Killercoda}} (free of charge) In this platform you can get to know some great initial questions. The platform is also very friendly so starting from killercoda is great move. The question are not hard, but work on them till master. Try not to use tips, till you are complete in the dark.
+
+\paragraph{\href{https://killer.sh/}{Killer.sh}} (paid) If you already bought the exam you should get link to 2 free attempts\footnote{You should also get 2 new fresh killer.sh attempts before 2nd exam try.}. Those question are very much close to what you might expect at the exam. Do not afraid using them. Use the first try when you feel you might be ready, and prepare your desk exactly like it is recommended by exam rules\cite{linuxfoundation-exam-rules}. This will give you plus minus what you might get at the exam.
+
+I found on YouTube the answers for the killersh question. Please, do not look at them before you pass the first attempt in \textit{killer.sh}. It is extremly vital to experiance the unknown. Later you should use the videos to master the questions before getting your 2nd attempt with \textit{killer.sh}. I used those question and execute them in my own cluster to practice the real questions.
+
+Killer Shell CKAD Practice videos with the answers \url{https://www.youtube.com/playlist?list=PLpbwBK0ptssyIgAoHR-611wt3O9wobS8T}
+
+\paragraph{\href{https://github.com/dgkanatsios/CKAD-exercises}{CKAD Exercises (dgkanatsios)}} Here you can find collection of some sample questions and aswers you can practice with.
+
+\paragraph{\href{https://github.com/jamesbuckett/ckad-questions}{CKAD Exercises (jamesbuckett)}} Another set of question you can use to practice.
+
+\paragraph{Linux and Vim} If you do not know Linux and Vim, then start learning them. At least the basics with moving around, inserting, deleting, \ldots, and exiting explicitly from Vim\footnote{There is bunch of famous jokes/memes around internet that people could have some hard time with Vim or could not exit Vim. Explore this only on you own responsibility.} ;). Mastering Linux and Vim in from complete newbie in just 12 months can be too difficult. Although no worry, you \textbf{can get the all the basics of editing pretty fast}.\\
+
+I also noticed that \textit{The Linux Foundation} have \textbf{lot of free courses} you can find in the following link \url{https://training.linuxfoundation.org/resources/?_sft_content_type=free-course}.
+
+If you feel, you want to leverage your knowledge, please explore the list to find something that might interest you. Few of the courses you may find beneficial expecially in \textbf{Linux fundamentals}, before starting the CKAD:
+
+\begin{itemize}
+	\item \href{https://training.linuxfoundation.org/training/introduction-to-linux/}{Introduction to Linux (LFS101)}
+	\item \href{https://training.linuxfoundation.org/training/linux-tools-for-software-development-lfd108x/}{Linux Tools for Software Development (LFD108x)}
+\end{itemize}
+
+To get \textbf{basics of Vim} you can use a plenty of free resources online. I personally find few of them quite helpful in the beggining:
+
+\begin{itemize}
+	\item \url{https://vim-adventures.com} -- online game to learn and explore how Vim works in fun and educational way.
+	\item \href{http://derekwyatt.org/vim/tutorials/novice/}{Vim Novice Videos}\footnote{\label{no-https}At the moment of writing this article, I found this website did not use HTTPS. Although it could be fixed by the time you make a visit.} by Derek Wyatt -- course friendly for begginers.
+	\item \url{http://vimcasts.org/episodes/}\footref{no-https} -- one of the best videos on various topics around Vim you can find in the web (recommended for medium and advanced).
+\end{itemize}
+
+\subsection{How to prepare to the final exam}
+
+Everyone has a unique way of preparing for the exam. You may find various tips online, but ensure they are from recent years, as many may be outdated and no longer applicable\footnote{At later section \nameref{subsec:exam-truths-and-myths}, I will attempt to demystify a few of them that I’ve come across.}.
+
+In this section, we'll discuss several \textbf{tips and tricks} I found particularly helpful during my exam preparation and also during the final attempt. Before we begin, I'll include here \textbf{a few links you must read before the final exam} resources I found most valuable as they contain plenty of information, tips, and updated exam rules that you can fully trust.
+
+\begin{itemize}
+	\item \href{https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad}{Tips CKA and CKAD}
+	\item \href{https://docs.linuxfoundation.org/tc-docs/certification/lf-handbook2/exam-rules-and-policies}{Exam rules and policies}
+\end{itemize}
+
+\subsubsection{Hardware tips}
+
+\paragraph{Use external camera} Many people recommend using an external camera, and I agree. If possible, choose a camera with at least a 1.5m cable. This is crucial during the initial room check, as you'll need to show the proctor the entire room (walls, ceiling, behind/under the desk, under the PC/keyboard) to ensure compliance with exam rules\cite{linuxfoundation-exam-rules}\cite{linuxfoundation-important-instructions-cka-and-ckad}. An external camera with a long cable will allow you to confidently shows the entire room without errors (like a detached cable) and can prevent delays or, in extreme cases, exam failure.
+
+\paragraph{Use external monitor} You are allowed to use one external monitor (a laptop plus external monitor is not permitted, as this would count as two monitors). I realized during my first attempt  that using large monitor is big deal -- I used only my laptop, but even my 15" MacBook lacked sufficient space for confident work as the text was relatively small\footnote{There is an option to adjust browser zoom in the final exam, though I personally found the text too small and uncomfortable to work with.}. During my 2nd attempt, I used my regular 27" external monitor attached to my MacBook and that was best choice.
+
+\paragraph{Use a regular mouse instead of a trackpad} If you're a Mac user, scrolling with the Mac's trackpad can be little problematic in Linux's virtual environment due to trackpads inertia\footnote{Trackpad's inertia provides a smoother scrolling experiance.} and can become extremely laggy during the exam, especially with a slow internet connection. If possible use a standard mouse with a physical scroll wheel for regular "jump" scrolling, or prefer keyboard shortcuts like \texttt{Fn} + \texttt{arrow keys} for page navigation (up/down, home/end).
+
+\subsubsection{Software tips}
+
+\paragraph{Learn Linux and Vim}  
+The exam is based on Linux, where all changes will be made in a pure console (forget about fancy GUIs). In this environment, it is essential to learn how to move quickly and become familiar with a few key programs. \href{https://www.vim.org/}{Vim} is one of them\cite{vim-org}.  
+Take a look at the learning resources in \nameref{subsubsec:resources-to-practice-excercises} and start mastering Vim operations. This will enable you to quickly create/edit files and apply the necessary changes when needed.  
+If Vim is unbearable for you, this might be more challenging. As an alternative, you can try \href{https://www.nano-editor.org}{Nano}\cite{nano-org}.
+
+\paragraph{Prepare the exam setup before starting the test} When the time comes and you finally arrive at the test environment, stop. Open an editor\footnote{At the exam I simply opened another terminal with Vim.} and write some helper commands for yourself. This way, when you need them, they will be ready to copy~\&~paste (e.g.\ \fullref{lst:kubectl-change-context}). This obvious little trick helped me save a lot of time and stress, as I would otherwise have to retype it each time.
+
+\paragraph{Vim} The Vim editor in the final test environment now comes with some pretty good basic preconfiguration. In my exam, I noticed it already: use spaces for tabbing, use 2 spaces for tab jumps, and ensure moving blocks of text use expected 2-space indentation. So you do not need to spend any additional time preconfiguring it.
+
+\paragraph{Pay attention to YAML syntax} You must pay attention to spaces and avoid mixing them with tab characters. I believe that in the current Vim configuration you will have on the exam, this problem has been resolved. When you mark several lines and indent them, it will correctly use spaces. Nevertheless, be careful, as tab characters are like spaces, they are invisible. During an exam frenzy, you might lose precious minutes trying to find them.
+
+\noindent In Vim, you can quickly \underline{convert tabs to spaces} by executing the \href{https://vi.stackexchange.com/a/496/32119}{\texttt{:retab}} command.
+
+\paragraph{Use \textit{Tab} to autocomplete commands}  
+This may seem trivial or obvious to some of you, but mastering \textit{Tab}-based command completion is essential for maintaining speed and accuracy under time pressure. The exam environment is preconfigured to support autocomplete for \texttt{kubectl}, allowing you to tab through subcommands or flags as you type. This feature becomes especially valuable during high-stress moments when you might forget key details.
+
+\paragraph{Use \texttt{k} instead of \texttt{kubectl}}  
+The alias \texttt{alias k=kubectl} is a critical shortcut already preconfigured in the exam environment. While you may have encountered this alias in resources or lectures, it’s worth emphasizing: no need to memorize the full command -- just use \texttt{k} for efficiency!
+
+\begin{tip}{}
+	During my learning on my private cluster, I found it more useful to create a symlink instead of an alias for \texttt{kubectl}. By making \texttt{kubectl} a symlink named \texttt{k}, you can combine \texttt{k} with other tools like \texttt{watch}. For example, you could run \texttt{watch k get pod}, which typically wouldn't work with a simple alias.
+
+	
+	\begin{verbatim}
+		# get location of kubectl
+		$ which kubectl
+		/usr/bin/kubectl
+		
+		# create k symlink for kubectl
+		$ sudo ln -sf /usr/bin/kubectl /usr/local/bin/k
+	\end{verbatim}
+\end{tip}
+
+\paragraph{Master \textit{kubectl}} The \texttt{kubectl} CLI is essential to your success in passing the exam. The better you master it, the quicker you will move during the exam, which will give you an advantage in your final results. Below is \fullref{lst:kubectl-get-short-forms}, so you can become more familiar with shorter forms that may save you some precious time. To get a full reference of \texttt{kubectl}, see Tip \ref{tip:kubectl-reference}.
+
+\begin{lstlisting}[label=lst:kubectl-get-short-forms, caption=Short forms of kubectl get command]
+k get po # get POds
+k get node # get NODEs
+k get deploy # get DEPLOYments
+k get ns # get NameSpaces
+k get rs # get ReplicaSet
+k get svc # get SerViCes
+k get ep # get EndPoints
+k get cj # get CronJobs
+k get secret # get SECRETs
+k get sa # get SeviceAccounts
+k get clusterrole # get CLUSTERROLEs
+k get rolebinding # get ROLEBINDINGs
+k get netpol # get NETWORKPOLICYs
+k get sc # StorageClass
+k get quota # Resource Quotas
+k get limitrange # LimitRanges
+\end{lstlisting}
+
+\paragraph{Use \texttt{kubectl create} whenever possible (imperative commands)}  
+You already know that in order to pass the exam, you must master \texttt{kubectl}\cite{kubectl-commands}.  
+You also know that the \texttt{k} alias for \texttt{kubectl} is a useful shortcut for typing long commands faster.  
+However, there is more to consider. If you are asked to create resources such as \textit{cronjob}, \textit{configmap}, \textit{secret}, \textit{deployment}, or any other object, avoid relying on Kubernetes Docs\cite{kubernetes-docs} for every detail.  
+Instead, familiarize yourself with the types of objects you can create using the \texttt{kubectl create} command.  
+Do not stop ther, go further by exploring other commands to maximize your advantage during the exam. For example, \texttt{kubectl expose} is also very~valuable.
+
+\begin{tip}{tip:kubectl-reference}
+	You can find the full \texttt{kubectl} reference at \url{https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands}. If the link is too long to remember, there's no need to worry. You can quickly access this page by opening the standard Kubernetes documentation at \url{https://kubernetes.io/docs} and searching for \texttt{kubectl ref}. The first search result should direct you to this page, making it easy to locate during the exam.
+\end{tip}
+
+Although listing all useful imperative commands here (or even the most essential ones) would be a crime made on this document's length. Therefore I want to recommend you relying on external resource for a comprehensive collection of imperative commands that are valuable during both learning and final certification.
+
+\begin{itemize}
+	\item \url{https://www.cloudtechtwitter.com/2023/11/k8s-top-80-imperative-commands-for-ckad.html}
+\end{itemize}
+
+\subparagraph{Change context}  
+From all the commands I think changing the context was the most useful for me during the exam.  
+This is because, by default, when you open a fresh cluster, you land in the \texttt{default} namespace.  
+In the exam task, you are usually asked to execute an action in a specific namespace\footnote{Although this is not always true. When there is no namespace specified, you must execute commands exactly in the \texttt{default} namespace.}.  
+Exam creators often use generic and exotic names, such as the namespace \texttt{joyful-rabbit}.  
+You can execute commands in given namespace by adding the \texttt{-n} flag (e.g., \texttt{k -n joyful-rabbit get pods}).  
+This is fine if you are not under time pressure, as you must type \texttt{-n <namespace>} for every command.  
+Otherwise, it will execute in the context you are currently in.  
+You can see that in the \fullref{lst:kubectl-change-context} -- this command was my \textbf{time saver} and also can become yours.
+
+\begin{lstlisting}[label=lst:kubectl-change-context, caption=Change current context]
+	kubectl config set-context --current --namespace=
+\end{lstlisting}
+
+\subsubsection{General tips}
+
+\paragraph{Great internet connection} In my initial attempt, I used only my laptop to take the test from home using Wi-Fi. At home, I had a good but not extremely fast internet connection, around 250~Mbps. The mistake I made was using the Wi-Fi instead of a cable connection during the exam. This is because, during the entire exam, you stream your video, audio, and screen so the proctor can supervise validity of all your actions. Using a wireless connection with significant surrounding interference caused slower response times from the remote environment, which slowed me down during tasks. If possible, \underline{take the test in a location with a fast, unlimited internet} connection. If this is not possible, \underline{use a USB dongle to an Ethernet adapter} to at least reduce environmental interference and provide stable straming.
+
+\paragraph{Time pressure} There is intense time pressure due to the number of tasks you might receive. Usually, there are 15–20 tasks\footnote{On my exam, I received 17 tasks.}, so if we assume the worst-case scenario, you may get 20 tasks, which giving you on average 6 minutes per task. Therefore, you must learn how to work \textit{Under Pressure} \href{https://www.youtube.com/watch?v=a01QQZyl-_I}{(video)}.
+
+\paragraph{Use the copy button to get values}
+
+The names of many services or namespaces often have unusual and lengthy names. During the exam, tasks are designed to make copying these names easy. Please, make yourself a favor and develop a habit of always copying the values (even during your learning exercises).
+
+\paragraph{Copy from terminal} If you are Mac-User remember there is different shortcuts to copy and paste in the terminal. Try to practice this during your demo sessions.
+
+\begin{lstlisting}[label=lst:exam-copy-and-paste, caption=Copy and paste in exam environment]
+Copy = Ctrl + Shift + c
+Paste = Ctrl + Shift + v
+\end{lstlisting}
+
+\paragraph{Fill all mandatory documents before the exam and log in early}  
+When you receive your exam date, log in to your account a few days beforehand to complete any missing information and documents. This will reduce stress and ensure you can focus fully on the test without additional tasks. Prepare your workspace by clearing your desk, walls, and ceiling of unnecessary items. A complete list of acceptable testing locations is available in Section \href{https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad#acceptable-testing-location}{Acceptable Testing Location}\cite{linuxfoundation-important-instructions-cka-and-ckad}.
+
+On the day of the exam, log in 30 minutes before the scheduled time. Follow the on-screen instructions to configure your machine -- this will allowing you to concentrate entirely on the test.
+
+
+\paragraph{Use the exam tutorial session} Before attempting the final exam, you can run the tutorial session 3-times to simulate the environment you will be working with. Please do not skip this! Run it at least once to familiarize yourself with it, as you will have no additional time to explore the environment during the actual exam. Instead, you should focus purely on the given tasks.
+
+
+\subsection{Exams truths and myths}
+\label{subsec:exam-truths-and-myths}
+
+Kubernetes exams have evolved over time, and what was permitted in earlier versions may no longer be valid for current tests. In this section, I will address some truths and myths I encountered while learning and from online resources. Some of which were correct for older exams but are no longer applicable.
+
+\paragraph{You can use own prepared links} Myth: In previous versions of Kubernetes exams, yes it was possible to prepare custom links for quick access to specific documentation pages. Although according to latest rule \textbf{this is no longer permitted}\cite{linuxfoundation-important-instructions-cka-and-ckad}.
+
+\paragraph{You can use other browser windows during the exam} Myth: During the actual exam, you must install \href{https://www.psiexams.com/}{the PSI browser bridge}. Upon entering the exam, you are required to close all applications except the PSI browser. The exam must be taken using the PSI browser within the virtual desktop environment. In the virual environment you will be allowed likely using Firefox browser\cite{psiexams-com}\cite{linuxfoundation-important-instructions-cka-and-ckad}.
+
+\subsection{Bonus: Topics to Focus on Before the Exam}
+
+As you already know, for the exam you will receive a random list of questions. Nobody knows which questions you will get, although you can refer to the Curriculum\cite{cncf-curriculum} to understand the percentage involvement of each task. This can help you speculate on the likelihood of certain topics appearing.
+
+At the end, I want to leave you with some guidance on which topics from the curriculum you should prioritize training for, to best prepare for the final exam:
+
+\begin{itemize} 
+	\item creating \textit{CronJob} with all possible additional configurations 
+	\item create and execute \textit{Job} (also rerun the one you already created)
+	\item create \textit{ConfigMap} from existing \textit{Pod}
+	\item create \textit{Secret} from the existing \textit{Pod}
+	\item create canary \textit{Deployment} from existing \textit{Deployment}
+	\item create green-blue \textit{Deployment}
+	\item create fresh \textit{Deployment} from the given informations
+	\item update a \textit{Deployment} without deleting it\footnote{Focus here on exploring \texttt{kubectl rollout} with \texttt{restart} or \texttt{resume} options.}
+	\item fix error in \textit{Deployment} or \textit{Pod}
+	\item create \textit{Docker} image from \textit{Dockerfile} and save it to tar file at location X
+	\item install some \textit{helm} image and configure their replicas amount within inline command
+	\item create \textit{Ingress} confiuration
+	\item confiure \textit{Ingress} from already defined rules
+	\item build some \textit{PV} \& \textit{PVC} and attach it to the \textit{Deployment} or \textit{Pod}
+\end{itemize}
+
+
+\section{Closing note}
+
+Congratulations on reaching the end of this journey! In this guide, I aimed to bridge the gap between theoretical knowledge and practical mastery of Kubernetes, and to equip you with the knowledge to confidently begin tackling your CKAD certification. Remember, the path to certification is as much about persistence and hands-on practice as it is about understanding concepts.
+
+As you move forward, let this guide serve as a foundation, but don’t stop here. Apply what you’ve learned in real-world scenarios, experiment with your own projects, and stay curious. The Kubernetes ecosystem is constantly evolving, and continuous learning is the key to staying ahead.
+
+Passing the CKAD milestone will signal your dedication and ability to solve real-world problems. Embrace the challenges, trust your preparation, and let this certification open doors to new opportunities in your career.
+
+Thank you for staying with me, reading this article and most important investing in your growth. I hope you had as much fun reading it as I did writing it. Now, go, and make the impact!
+
+\vspace{0.25cm}
+\begin{multicols}{3}
+\vfill\null\columnbreak
+\vfill\null\columnbreak
+\noindent{}Best,\\
+Maciej
+\end{multicols}

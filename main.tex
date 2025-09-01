@@ -1,0 +1,251 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[letterpaper,top=1.5cm,bottom=1.5cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage[
+    backend=biber,
+    %style=authoryear-icomp,
+    style=numeric,
+    sortlocale=en_US,
+    natbib=true,
+    url=false, 
+    doi=true,
+    eprint=false
+]{biblatex}
+\addbibresource{biblatex.bib}
+
+\usepackage[usenames]{color} % palette of defined colors
+\usepackage[table, x11names]{xcolor}   % Load the colortbl package, in order to use the tools for coloring rows, columns, and cells within tables.
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+%\usepackage[hyphens]{url}
+\usepackage{xurl} % allow to break of the long URLs
+\usepackage{breakurl} % allow to break of the long URLs
+\hypersetup{
+    colorlinks=true,
+}
+
+\usepackage[inline]{enumitem} % inline lists
+\usepackage{multicol} % multi columns
+
+\usepackage[framemethod=TikZ]{mdframed} 
+\usepackage{amsthm} % math package
+
+\usepackage{tabularx} % more advanced tables
+
+\usepackage{nameref} % allow to use name references
+
+\usepackage{scrextend} % for footref - refering to same footnote
+
+\usepackage[english]{isodate}
+
+% captions package use for in lstlintings
+\usepackage[
+font=small,
+format=hang,
+labelformat=simple,
+justification=justified,
+singlelinecheck=false,
+labelsep=colon
+]{caption}
+
+\usepackage{listings}
+
+\lstdefinestyle{Bash}{% bash style
+	language=Bash,
+	keywordstyle=\color{DodgerBlue3}\ttfamily\textbf,
+	commentstyle=\color{DarkOliveGreen3},
+	basicstyle=\ttfamily,
+	alsoletter={-},
+	sensitive=false,
+	morekeywords={sudo, wget, chmod, dpkg, git},
+	%literate={\$}{{\textcolor{MidnightBlue}{\$}}}1
+	%         {-}{{\textcolor{MidnightBlue}{-}}}1
+	%         {~}{{\textcolor{MidnightBlue}{\textasciitilde}}}1,
+}
+
+\lstset{%
+	%extendedchars=true, % celowo wyłączone
+	inputencoding=utf8,
+	%language=[LaTeX]TeX,
+	basicstyle=\footnotesize\ttfamily,
+	numberstyle=\footnotesize,
+	captionpos=t,
+	tabsize=2,
+	frame=tb,
+	alsoletter={-},
+	numbers=left,
+	breaklines=true,
+	showtabs=false,
+	showspaces=false,
+	showstringspaces=false,
+	style=bash, % with "{}" style for listing is diabled
+	keywordstyle=\color{DodgerBlue2},
+	commentstyle=\color{DarkOliveGreen3},
+	stringstyle=\color{Firebrick1},
+	emph={label},
+	literate=% Polish fonts for better UTF-8
+		{ą}{{\k{a}}}1     {ć}{{\'c}}1       {ę}{{\k{e}}}1     {ó}{{\'o}}1
+		{ń}{{\'n}}1       {ł}{{\l{}}}1      {ś}{{\'s}}1       {ź}{{\'z}}1
+		{ż}{{\.z}}1       {Ą}{{\k{A}}}1     {Ć}{{\'C}}1       {Ę}{{\k{E}}}1
+		{Ó}{{\'O}}1       {Ń}{{\'N}}1       {Ł}{{\L{}}}1      {Ś}{{\'S}}1
+		{Ź}{{\'Z}}1       {Ż}{{\.Z}}1
+		% Rest of most used latin fonts
+		{á}{{\'a}}1   {é}{{\'e}}1     {í}{{\'i}}1   {ó}{{\'o}}1   {ú}{{\'u}}1
+		{Á}{{\'A}}1   {É}{{\'E}}1     {Í}{{\'I}}1   {Ó}{{\'O}}1   {Ú}{{\'U}}1
+		{à}{{\`a}}1   {è}{{\`e}}1     {ì}{{\`i}}1   {ò}{{\`o}}1   {ù}{{\`u}}1
+		{À}{{\`A}}1   {È}{{\'E}}1     {Ì}{{\`I}}1   {Ò}{{\`O}}1   {Ù}{{\`U}}1
+		{ä}{{\"a}}1   {ë}{{\"e}}1     {ï}{{\"i}}1   {ö}{{\"o}}1   {ü}{{\"u}}1
+		{Ä}{{\"A}}1   {Ë}{{\"E}}1     {Ï}{{\"I}}1   {Ö}{{\"O}}1   {Ü}{{\"U}}1
+		{â}{{\^a}}1   {ê}{{\^e}}1     {î}{{\^i}}1   {ô}{{\^o}}1   {û}{{\^u}}1
+		{Â}{{\^A}}1   {Ê}{{\^E}}1     {Î}{{\^I}}1   {Ô}{{\^O}}1   {Û}{{\^U}}1
+		{œ}{{\oe}}1   {Œ}{{\OE}}1     {æ}{{\ae}}1   {Æ}{{\AE}}1   {ß}{{\ss}}1
+		{ç}{{\c c}}1  {Ç}{{\c C}}1    {ø}{{\o}}1    {å}{{\r a}}1  {Å}{{\r A}}1
+		{€}{{\EUR}}1  {£}{{\pounds}}1
+	}
+\newcommand*{\code}{\lstinline[style=Inline,columns=fixed]} % new comand to define inline code
+\lstMakeShortInline[columns=fixed]|
+
+% Updated definition, see explanation below
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\autoref*{#1} \nameref*{#1}}} % One single link
+
+% helper for lowercase newcommands
+\newcommand{\nmu}{}
+
+% Lowercase \nameref = \lnameref
+\newcommand{\lnameref}[1]{%
+	\bgroup%
+	\let\nmu\MakeLowercase%
+	\nameref{#1}\egroup}
+
+% First UpperCase then lowercase = \fnameref
+\newcommand{\fnameref}[1]{%
+	\bgroup%
+	\def\nmu{\let\nmu\MakeLowercase}%
+	\nameref{#1}\egroup}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definition
+\newtheorem{definition}{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Note
+\newcounter{note}[section]\setcounter{note}{0}
+\renewcommand{\thenote}{\arabic{section}.\arabic{note}}
+\newenvironment{note}[2][]{%
+	\refstepcounter{note}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=blue!20]
+				{\strut Note~\thenote};}}
+	}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=blue!20]
+				{\strut Note~\thenote:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=blue!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tip
+\newcounter{tip}[section] \setcounter{tip}{0}
+\renewcommand{\thetip}{\arabic{section}.\arabic{tip}}
+\newenvironment{tip}[2][]{%
+	\refstepcounter{tip}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=green!20]
+				{\strut Tip~\thetip};}}
+	}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=green!20]
+				{\strut Tip~\thetip:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=green!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Example
+\newcounter{expl}[section]\setcounter{expl}{0}
+\renewcommand{\theexpl}{\arabic{section}.\arabic{expl}}
+\newenvironment{expl}[2][]{%
+	\refstepcounter{expl}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=red!20]
+				{\strut Example~\theexpl};}}
+	}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=red!20]
+				{\strut Example~\theexpl:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=red!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+	}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\qed\end{mdframed}}
+
+\title{
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.3\linewidth]{assets/img/logo_ckad.png}
+		\label{fig:logo-ckad}
+	\end{figure}
+	
+	Certified Kubernetes Application Developer\\
+	{\large From Theory to Practice on Passing the CKAD Certification}
+}
+
+\author{Maciej Sypień \\
+	\footnotesize{}
+	\texttt{\href{mailto:maciejsypien@gmail.com}{maciejsypien@gmail.com}}
+	\text{\textbar} \texttt{\href{https://mastodon.social/@maciejsypien}{maciejsypien@mastodon.social}}
+}
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+Whether you're starting your Kubernetes journey or preparing for the CKAD exam, this guide provides essential tips to ace the CKAD and pass the final test. Highlighted bonus topics are included to enhance your exam preparation.
+\end{abstract}
+
+\tableofcontents
+
+\include{content}
+
+\clearpage
+\printbibliography[heading=bibintoc]
+
+\end{document}
+
